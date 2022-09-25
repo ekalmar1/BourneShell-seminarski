@@ -1,0 +1,129 @@
+%\usepackage[utf8]{inputenc}
+\usepackage[table]{xcolor}
+\usepackage{tabulary}
+\usepackage[croatian]{babel}
+\usepackage{fontspec}
+\setmainfont {Source Serif Pro}% {Times New Roman}
+\setsansfont {Source Sans Pro} %{Arial}
+\setmonofont {Source Code Pro} % {Courier New}
+\usepackage[a4paper,driver=xetex]{geometry}
+\geometry{marginparwidth=0.5cm,verbose,tmargin=25mm,bmargin=25mm,lmargin=25mm,rmargin=25mm}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{paleyellow}{HTML}{F5F5E2}
+\usepackage{float}
+\lstset{basicstyle=\ttfamily\footnotesize,
+        backgroundcolor = \color{paleyellow},
+        numbers=left,
+        numberstyle=\tiny, 
+        stepnumber=1,
+        numbersep=5pt,
+        breaklines=true,
+        frame=tlrb,
+        keywordstyle=\bfseries,
+        commentstyle=\color{gray}
+    }
+\newcommand{\ch}{\the\value{chapter}}
+\usepackage{graphicx}
+
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{environ}
+\usepackage{etoolbox}
+\usepackage{syntax}
+\usepackage{lipsum} % just for the example
+\usepackage[font=sf,labelfont=sf]{caption}
+
+% Commands for the project
+\newcommand {\langfigure}[4] {
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=#2\textwidth]{#1}
+    \ifx&#3& \else  \caption{#3}  \ifx&#4&  \else  \label{#4} \fi  \fi
+\end{figure}
+}
+
+\NewEnviron {langfiguretikz}[4][]
+{
+ \begin{figure}[H]
+    \centering
+    \resizebox{#2\textwidth}{!}{%
+    \begin{tikzpicture}[#1]
+    \BODY
+    \end{tikzpicture}
+    }%
+    \caption{#3}
+    \label {#4}
+  \end{figure}
+}
+
+\def\addtablerowA#1!{#1 \\  \hline }
+\def\addtablerowB#1|#2!{#1 & #2\\  \hline }
+\def\addtablerowC#1|#2|#3!{#1 & #2 & #3\\  \hline }
+\def\addtablerowD#1|#2|#3|#4!{#1 & #2 & #3 & #4\\  \hline }
+\def\addtablerowE#1|#2|#3|#4|#5!{#1 & #2 & #3 & #4 & #5\\  \hline }
+\def\addtablerowF#1|#2|#3|#4|#5|#6!{#1 & #2 & #3 & #4 & #5 & #6\\  \hline }
+\def\addtablerowG#1|#2|#3|#4|#5|#6|#7!{#1 & #2 & #3 & #4 & #5 & #6 & #7\\  \hline }
+\def\addtablerowH#1|#2|#3|#4|#5|#6|#7|#8!{#1 & #2 & #3 & #4 & #5 & #6 & #7 & #8 \\  \hline }
+\def\addtablerowI#1|#2|#3|#4|#5|#6|#7|#8|#9!{#1 & #2 & #3 & #4 & #5 & #6 & #7 & #8 & #9 \\  \hline }
+
+\newcommand{\langsimpletable}[5]{
+    \begin {table} [H]
+    \centering
+     \caption{#2}  \label{#3}
+    \renewcommand*\do[1]{
+        \ifnum #1 = 1  \addtablerowA##1! \fi
+        \ifnum #1 = 2  \addtablerowB##1! \fi
+        \ifnum #1 = 3  \addtablerowC##1! \fi
+        \ifnum #1 = 4  \addtablerowD##1! \fi
+        \ifnum #1 = 5  \addtablerowE##1! \fi
+        \ifnum #1 = 6  \addtablerowF##1! \fi
+        \ifnum #1 = 7  \addtablerowG##1! \fi
+        \ifnum #1 = 8  \addtablerowH##1! \fi
+        \ifnum #1 = 9  \addtablerowI##1! \fi
+      }
+
+    \begin{small}
+    \begin{tabulary} {\textwidth} {|L|L|L|L|L|L|L|L|L|}
+        \hline
+        \rowcolor{lightgray}
+        \docsvlist{#4} \hline
+    \end{tabulary}
+    \end{small}
+    \end{table}
+}
+\raggedbottom
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%
+%Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+\usepackage[Conny]{fncychap}
+\def \com {,}
+\def \vbr {|}
+
+\renewenvironment{enumerate}{%
+ \begin{asparaenum}%
+}{%
+    \end{asparaenum}%
+    \ignorespacesafterend%
+}
+
+\renewenvironment{itemize}{%
+    \begin{asparaitem}%
+}{%
+    \end{asparaitem}%
+    \ignorespacesafterend%
+}
+
+
+\lstnewenvironment{shortlisting}
+{\ifvmode \else \newline \fi
+\noindent\minipage[t]{\linewidth}}
+{\endminipage\ignorespacesafterend\ifvmode \else \newline \fi}
